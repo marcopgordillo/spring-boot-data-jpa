@@ -1,13 +1,12 @@
 package com.example.springboot.datajpa.app.controllers;
 
-import com.example.springboot.datajpa.app.models.dao.IClienteDao;
 import com.example.springboot.datajpa.app.models.entity.Cliente;
+import com.example.springboot.datajpa.app.models.service.IClienteService;
 
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,20 +21,19 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("cliente")
 public class ClienteController {
 
-  @Qualifier("clienteDaoJPA")
-  private final IClienteDao clienteDao;
+  private final IClienteService clienteService;
 
   @Value("${application.controller.titulo}")
   private String titulo;
 
-  public ClienteController(IClienteDao clienteDao) {
-    this.clienteDao = clienteDao;
+  public ClienteController(IClienteService clienteService) {
+    this.clienteService = clienteService;
   }
 
   @RequestMapping(value = "/listar", method = RequestMethod.GET)
   public String listar(Model model) {
     model.addAttribute("titulo", titulo);
-    model.addAttribute("clientes", clienteDao.findAll());
+    model.addAttribute("clientes", clienteService.findAll());
     return "listar";
   }
   
@@ -54,7 +52,7 @@ public class ClienteController {
   		model.addAttribute("titulo", "Formulario del Cliente");
   		return "form";
   	}
-  	clienteDao.save(cliente);
+  	clienteService.save(cliente);
   	status.setComplete();
   	return "redirect:/listar";
   }
@@ -65,7 +63,7 @@ public class ClienteController {
   	Cliente cliente = null;
   	
   	if (id > 0) {
-  		cliente = clienteDao.findOne(id);
+  		cliente = clienteService.findOne(id);
   	} else {
   		return "redirect:/listar";
   	}
@@ -77,7 +75,7 @@ public class ClienteController {
   @RequestMapping(value="/eliminar/{id}")
   public String eliminar(@PathVariable(value="id") Long id) {
   	if(id > 0) {
-  		clienteDao.delete(id);
+  		clienteService.delete(id);
   	}  	
   	return "redirect:/listar";
   }
