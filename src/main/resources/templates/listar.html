@@ -41,6 +41,7 @@
                 <th>Email</th>
                 <th>Fecha</th>
                 <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +51,8 @@
                 <td th:text="${cliente.apellido}">Perez</td>
                 <td th:text="${cliente.email}">juan@mail.com</td>
                 <td th:text="${cliente.createAt}">2018-01-25</td>
-                <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="'editar'"></a></td>
+                <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
+                <td><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
             </tr>
         </tbody>
     </table>
@@ -59,5 +61,6 @@
   <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <!-- <script src="webjars/font-awesome/5.6.3/js/all.min.js"></script> -->
+  <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

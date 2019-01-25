@@ -64,7 +64,7 @@ public class ClienteController {
   	
   	Cliente cliente = null;
   	
-  	if (id>0) {
+  	if (id > 0) {
   		cliente = clienteDao.findOne(id);
   	} else {
   		return "redirect:/listar";
@@ -72,5 +72,13 @@ public class ClienteController {
   	model.put("cliente", cliente);
   	model.put("titulo", "Editar Cliente");
   	return "form";
+  }
+  
+  @RequestMapping(value="/eliminar/{id}")
+  public String eliminar(@PathVariable(value="id") Long id) {
+  	if(id > 0) {
+  		clienteDao.delete(id);
+  	}  	
+  	return "redirect:/listar";
   }
 }
