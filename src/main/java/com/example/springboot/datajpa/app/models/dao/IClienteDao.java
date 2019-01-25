@@ -8,6 +8,5 @@ public interface IClienteDao {
 
   List<Cliente> findAll();
 
-
-
+  void save(Cliente cliente);
 }
