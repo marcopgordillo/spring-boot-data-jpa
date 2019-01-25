@@ -1,6 +1,9 @@
 package com.example.springboot.datajpa.app.models.entity;
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -19,14 +22,15 @@ public class Cliente implements Serializable {
   private String apellido;
   private String email;
 
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Column(name = "create_at")
   @Temporal(TemporalType.DATE)
   private Date createAt;
   
-  @PrePersist
+  /*@PrePersist
   public void prePersist() {
   	createAt = new Date();
-  }
+  }*/
 
   public Long getId() {
     return id;
@@ -65,7 +69,7 @@ public class Cliente implements Serializable {
   }
 
   public void setCreateAt(Date createAt) {
-    createAt = createAt;
+    this.createAt = createAt;
   }
 
   @Override
