@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title th:text="${titulo}">Title</title>
-  <link rel="stylesheet" href="webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/webjars/font-awesome/5.6.3/css/all.min.css" />
-  <link rel="stylesheet" th:href="@{css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -28,9 +28,10 @@
   <div class="container">
     <h1 class="text-secondary border border-success border-top-0 border-left-0 border-right-0" th:text="${titulo}">Title</h1>
     <!-- <p><i class="fab fa-apple" data-fa-transform="grow-6 rotate-30"></i> Parrafo</p> -->
-    <p><i class="fab fa-apple"></i> Parrafo</p>
-
-    <a th:href="@{/form}"><i class="far fa-user"></i> Crear Cliente</a>
+    <p>
+        <a class="btn btn-default btn-xs" th:href="@{/form}"><i class="far fa-user"></i> Crear Cliente</a>
+    </p>
+    
     <table class="table table-striped">
         <thead>
             <tr>
@@ -39,6 +40,7 @@
                 <th>Apellido</th>
                 <th>Email</th>
                 <th>Fecha</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
@@ -48,13 +50,14 @@
                 <td th:text="${cliente.apellido}">Perez</td>
                 <td th:text="${cliente.email}">juan@mail.com</td>
                 <td th:text="${cliente.createAt}">2018-01-25</td>
+                <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="'editar'"></a></td>
             </tr>
         </tbody>
     </table>
   </div>
-  <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
-  <script src="webjars/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+  <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <!-- <script src="webjars/font-awesome/5.6.3/js/all.min.js"></script> -->
 </body>
 </html>
