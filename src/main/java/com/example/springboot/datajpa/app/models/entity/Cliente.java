@@ -1,7 +1,10 @@
 package com.example.springboot.datajpa.app.models.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -18,10 +21,17 @@ public class Cliente implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotEmpty
   private String nombre;
+  
+  @NotEmpty
   private String apellido;
+  
+  @NotEmpty
+  @Email
   private String email;
 
+  @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Column(name = "create_at")
   @Temporal(TemporalType.DATE)

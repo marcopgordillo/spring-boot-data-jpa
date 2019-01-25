@@ -5,10 +5,13 @@ import com.example.springboot.datajpa.app.models.entity.Cliente;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,7 +45,10 @@ public class ClienteController {
   }
   
   @RequestMapping(value="/form", method = RequestMethod.POST)
-  public String guardar(Cliente cliente) {
+  public String guardar(@Valid Cliente cliente, BindingResult result) {
+  	if(result.hasErrors()) {
+  		return "form";
+  	}
   	clienteDao.save(cliente);
   	return "redirect:listar";
   }
