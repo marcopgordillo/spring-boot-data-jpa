@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${titulo}">Title</title>
+</head>
+<body>
+  <h1 th:text="${titulo}">Title</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Fecha</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente: ${clientes}">
+      <td th:text="${cliente.id}">1</td>
+      <td th:text="${cliente.nombre}">Juan</td>
+      <td th:text="${cliente.apellido}">Perez</td>
+      <td th:text="${cliente.email}">juan@mail.com</td>
+      <td th:text="${cliente.createAt}">2018-01-25</td>
+    </tr>
+    </tbody>
+  </table>
+</body>
+</html>
