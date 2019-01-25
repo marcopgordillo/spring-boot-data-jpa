@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -29,6 +29,8 @@
     <h1 class="text-secondary border border-success border-top-0 border-left-0 border-right-0" th:text="${titulo}">Title</h1>
     <!-- <p><i class="fab fa-apple" data-fa-transform="grow-6 rotate-30"></i> Parrafo</p> -->
     <p><i class="fab fa-apple"></i> Parrafo</p>
+
+    <a th:href="@{/form}"><i class="far fa-user"></i> Crear Cliente</a>
     <table class="table table-striped">
         <thead>
             <tr>
