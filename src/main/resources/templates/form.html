@@ -27,6 +27,12 @@
   </nav>
     <div class="container">
         <h1 class="text-secondary border border-success border-top-0 border-left-0 border-right-0" th:text="${titulo}">Title</h1>
+
+        <div th:object="${cliente}" th:remove="tag">
+            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+            	<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
         <form class="needs-validation" th:action="@{/form}" th:object="${cliente}" method="POST">            
             <div class="form-group row">
                 <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre:</label>

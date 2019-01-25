@@ -40,13 +40,14 @@ public class ClienteController {
   	Cliente cliente = new Cliente();
   	
   	model.put("cliente", cliente);
-  	model.put("titulo", "Formulario de Cliente");
+  	model.put("titulo", "Formulario del Cliente");
   	return "form";
   }
   
   @RequestMapping(value="/form", method = RequestMethod.POST)
-  public String guardar(@Valid Cliente cliente, BindingResult result) {
+  public String guardar(@Valid Cliente cliente, BindingResult result, Model model) {
   	if(result.hasErrors()) {
+  		model.addAttribute("titulo", "Formulario del Cliente");
   		return "form";
   	}
   	clienteDao.save(cliente);
