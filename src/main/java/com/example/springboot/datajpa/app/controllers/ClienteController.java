@@ -101,7 +101,7 @@ public class ClienteController {
   }
   
   @RequestMapping(value="/form", method = RequestMethod.POST)
-  public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+  public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("foto-upload") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
 
   	if(result.hasErrors()) {
   		model.addAttribute("titulo", "Crear Cliente");

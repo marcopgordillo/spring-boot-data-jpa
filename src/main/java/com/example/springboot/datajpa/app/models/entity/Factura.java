@@ -1,5 +1,7 @@
 package com.example.springboot.datajpa.app.models.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +18,9 @@ public class Factura implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotEmpty
   private String descripcion;
+
   private String observacion;
 
   @Column(name = "create_at")

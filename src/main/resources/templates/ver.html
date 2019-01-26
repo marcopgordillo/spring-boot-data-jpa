@@ -8,7 +8,7 @@
     <div class="card bg-light">
       <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
       <div class="card-body">
-        <img th:if="${#strings.length(cliente.foto) > 0}" class="img-thumbnail rounded float-left" th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.NombreCompleto}" />
+        <img th:if="${#strings.length(cliente.foto) > 0}" class="img-thumbnail rounded float-left" th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.nombreCompleto}" />
 
         <ul class="list-group">
           <li class="list-group-item" th:text="${cliente.nombre}"></li>
@@ -17,7 +17,7 @@
           <li class="list-group-item" th:text="${cliente.dayOfBirth}"></li>
         </ul>
 
-        <div class="alert alert-info my-4" th:if="${#lists.isEmpty(cliente.facturas)}" th:text="'No hay facturas asignadas para el cliente ' + ${cliente.NombreCompleto}">
+        <div class="alert alert-info my-4" th:if="${#lists.isEmpty(cliente.facturas)}" th:text="'No hay facturas asignadas para el cliente ' + ${cliente.nombreCompleto}">
         </div>
 
         <table class="table table-bordered table-striped my-4" th:if="${not #lists.isEmpty(cliente.facturas)}">
@@ -34,7 +34,7 @@
             <td th:text="${factura.id}"></td>
             <td th:text="${factura.descripcion}"></td>
             <td th:text="${factura.createAt}"></td>
-            <td th:text="${#numbers.formatDecimal(factura.total,3,2)}"></td>
+            <td class="text-right" th:text="${#numbers.formatDecimal(factura.total,3,2)}"></td>
           </tr>
           </tbody>
         </table>
