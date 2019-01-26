@@ -108,6 +108,7 @@ public class ClienteController {
   		return "form";
   	}
 
+  	// En el caso de cambiar la foto
   	if (!foto.isEmpty()) {
 
   	  if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() != null && cliente.getFoto().length() > 0) {
@@ -124,6 +125,10 @@ public class ClienteController {
       cliente.setFoto(uniqueFileName);
       flash.addFlashAttribute("info", "Has subido corectamente '" + uniqueFileName + "'");
 
+    }
+
+  	if (cliente.getFoto() == null) {
+  	  cliente.setFoto("");
     }
 
   	String mensajeFlash = (cliente.getId() != null) ? "¡Cliente actualizado con éxito!" : "¡Cliente creado con éxito!";

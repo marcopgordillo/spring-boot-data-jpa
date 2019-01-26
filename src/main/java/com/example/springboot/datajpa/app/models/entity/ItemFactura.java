@@ -20,7 +20,7 @@ public class ItemFactura implements Serializable {
   private Producto producto;
 
   public Double calcularImporte() {
-    return cantidad * producto.getPrecio();
+    return cantidad * producto.getPrecio().doubleValue();
   }
 
   public Long getId() {

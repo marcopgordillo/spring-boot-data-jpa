@@ -15,7 +15,7 @@ public class Producto implements Serializable {
   private Long id;
 
   private String nombre;
-  private Double precio;
+  private Float precio;
 
   @Column(name = "create_at")
   @Temporal(TemporalType.DATE)
@@ -42,11 +42,11 @@ public class Producto implements Serializable {
     this.nombre = nombre;
   }
 
-  public Double getPrecio() {
+  public Float getPrecio() {
     return precio;
   }
 
-  public void setPrecio(Double precio) {
+  public void setPrecio(Float precio) {
     this.precio = precio;
   }
 
