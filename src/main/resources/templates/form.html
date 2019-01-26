@@ -12,7 +12,7 @@
                       <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
                     </ul>
                 </div>
-                <form class="needs-validation" th:action="@{/form}" th:object="${cliente}" method="POST">
+                <form class="needs-validation" th:action="@{/form}" th:object="${cliente}" method="POST" enctype="multipart/form-data">
                     <div class="form-group row">
                         <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre:</label>
                         <div class="col-sm-10">

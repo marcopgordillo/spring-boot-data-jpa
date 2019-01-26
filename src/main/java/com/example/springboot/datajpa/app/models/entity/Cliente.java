@@ -36,6 +36,8 @@ public class Cliente implements Serializable {
   @Column(name = "create_at")
   @Temporal(TemporalType.DATE)
   private Date createAt;
+
+  private String foto;
   
   /*@PrePersist
   public void prePersist() {
@@ -82,6 +84,14 @@ public class Cliente implements Serializable {
     this.createAt = createAt;
   }
 
+  public String getFoto() {
+    return foto;
+  }
+
+  public void setFoto(String foto) {
+    this.foto = foto;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -91,12 +101,13 @@ public class Cliente implements Serializable {
             getNombre().equals(cliente.getNombre()) &&
             getApellido().equals(cliente.getApellido()) &&
             getEmail().equals(cliente.getEmail()) &&
-            getCreateAt().equals(cliente.getCreateAt());
+            getCreateAt().equals(cliente.getCreateAt()) &&
+            getFoto().equals(cliente.getFoto());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getNombre(), getApellido(), getEmail(), getCreateAt());
+    return Objects.hash(getId(), getNombre(), getApellido(), getEmail(), getCreateAt(), getFoto());
   }
 
   @Override
@@ -106,7 +117,8 @@ public class Cliente implements Serializable {
             ", nombre='" + nombre + '\'' +
             ", apellido='" + apellido + '\'' +
             ", email='" + email + '\'' +
-            ", CreateAt=" + createAt +
+            ", CreateAt=" + createAt + '\'' +
+            ", foto=" + foto +
             '}';
   }
 }
