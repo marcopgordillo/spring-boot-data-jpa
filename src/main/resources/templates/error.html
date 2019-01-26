@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Error Page</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/webjars/font-awesome/5.6.3/css/all.min.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>    
+    <div class="container">
+        <div class="jumbotron">
+        <h1 class="display-4">Something went wrong!</h1>
+        <p class="lead">Our Engineers are on it</p>
+        <hr class="my-4" />
+        <p th:text="${errorMsg}">Error</p>
+        <a class="btn btn-primary btn-lg" th:href="@{/listar}" role="button">Go Home</a>
+        </div>
+    </div>    
+</body>
+</html>
