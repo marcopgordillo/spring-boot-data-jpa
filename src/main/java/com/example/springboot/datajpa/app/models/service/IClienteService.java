@@ -15,6 +15,8 @@ public interface IClienteService {
 	void save(Cliente cliente);
 	  
 	Cliente findOne(Long id);
+
+	boolean exists(Long id);
 	  
 	void delete(Long id);
 }

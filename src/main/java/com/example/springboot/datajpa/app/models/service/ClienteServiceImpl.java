@@ -45,6 +45,11 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 
 	@Override
+	public boolean exists(Long id) {
+		return clienteDao.exists(id);
+	}
+
+	@Override
 	@Transactional
 	public void delete(Long id) {
 		clienteDao.delete(id);

@@ -87,12 +87,12 @@ public class ClienteController {
   @GetMapping(value = "/ver/{id}")
   public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-    Cliente cliente = clienteService.findOne(id);
-
-    if (cliente == null) {
+    if (!clienteService.exists(id)) {
       flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
       return "redirect:/listar";
     }
+
+    Cliente cliente = clienteService.findOne(id);
 
     model.put("titulo", "Detalla cliente: " + cliente.getNombreCompleto());
     model.put("cliente", cliente);
@@ -142,11 +142,9 @@ public class ClienteController {
   @RequestMapping(value="/form/{id}")
   public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
   	
-  	Cliente cliente;
-  	
   	if (id > 0) {
-  		cliente = clienteService.findOne(id);
-  		if (cliente == null) {
+
+  		if (!clienteService.exists(id)) {
         flash.addFlashAttribute("error", "¡El ID del cliente no existe en la Base de datos!");
         return "redirect:/listar";
       }
@@ -154,6 +152,8 @@ public class ClienteController {
       flash.addFlashAttribute("error", "¡El ID del cliente no puede ser cero!");
   		return "redirect:/listar";
   	}
+
+    Cliente cliente = clienteService.findOne(id);
   	model.put("cliente", cliente);
   	model.put("titulo", "Editar Cliente");
   	return "form";
