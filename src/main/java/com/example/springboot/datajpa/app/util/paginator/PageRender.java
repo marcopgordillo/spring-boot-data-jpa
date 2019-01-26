@@ -21,10 +21,9 @@ public class PageRender<T> {
   public PageRender(String url, Page<T> page) {
     this.url = url;
     this.page = page;
-    this.paginas = new ArrayList<>();
 
+    paginas = new ArrayList<>();
     numElementosPorPagina = page.getSize();
-
     totalPaginas = page.getTotalPages();
     paginaActual = page.getNumber() + 1;
 
@@ -40,13 +39,13 @@ public class PageRender<T> {
         desde = totalPaginas - numElementosPorPagina + 1;
         hasta = numElementosPorPagina;
       } else {
-        desde = paginaActual - numElementosPorPagina;
+        desde = paginaActual - numElementosPorPagina / 2;
         hasta = numElementosPorPagina;
       }
     }
 
     for (int i = 0; i < hasta; i++) {
-      paginas.add(new PageItem(desde + i, paginaActual == desde + 1));
+      paginas.add(new PageItem(desde + i, paginaActual == desde + i));
     }
   }
 

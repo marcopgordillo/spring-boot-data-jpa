@@ -2,6 +2,7 @@ package com.example.springboot.datajpa.app.controllers;
 
 import com.example.springboot.datajpa.app.models.entity.Cliente;
 import com.example.springboot.datajpa.app.models.service.IClienteService;
+import com.example.springboot.datajpa.app.util.paginator.PageRender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,8 +35,12 @@ public class ClienteController {
     Pageable pageRequest = new PageRequest(page, 5);
 
     Page<Cliente> clientes = clienteService.findAll(pageRequest);
+
+    PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
+
     model.addAttribute("titulo", titulo);
     model.addAttribute("clientes", clientes);
+    model.addAttribute("page", pageRender);
     return "listar";
   }
   
