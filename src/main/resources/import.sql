@@ -33,3 +33,13 @@ INSERT INTO productos (nombre, precio, create_at) VALUES ('Hewlett Packard Multi
 INSERT INTO productos (nombre, precio, create_at) VALUES ('Bianchi Bicicleta aro 26', 699.90, DATE(NOW()));
 INSERT INTO productos (nombre, precio, create_at) VALUES ('Mica comoda 5 cajones', 2999.90, DATE(NOW()));
 INSERT INTO productos (nombre, precio, create_at) VALUES ('Sony Camara Digital DSC-W320B', 1234.90, DATE(NOW()));
+
+/* Facturas de ejemplo */
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura equipos de oficina', null, 1, DATE(NOW()));
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (2, 1, 4);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 5);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 7);
+
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura Bicicleta', 'Alguna Nota Importante!', 1, DATE(NOW()));
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (3, 2, 6);

@@ -17,6 +17,28 @@
           <li class="list-group-item" th:text="${cliente.dayOfBirth}"></li>
         </ul>
 
+        <div class="alert alert-info my-4" th:if="${#lists.isEmpty(cliente.facturas)}" th:text="'No hay facturas asignadas para el cliente ' + ${cliente.NombreCompleto}">
+        </div>
+
+        <table class="table table-bordered table-striped my-4" th:if="${not #lists.isEmpty(cliente.facturas)}">
+          <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="factura : ${cliente.facturas}">
+            <td th:text="${factura.id}"></td>
+            <td th:text="${factura.descripcion}"></td>
+            <td th:text="${factura.createAt}"></td>
+            <td th:text="${#numbers.formatDecimal(factura.total,3,2)}"></td>
+          </tr>
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>
