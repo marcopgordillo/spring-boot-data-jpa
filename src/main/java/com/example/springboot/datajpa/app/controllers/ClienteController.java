@@ -36,6 +36,9 @@ public class ClienteController {
   @Value("${application.controller.titulo}")
   private String titulo;
 
+  @Value("${application.controller.uploads}")
+  private String uploads;
+
   public ClienteController(IClienteService clienteService) {
     this.clienteService = clienteService;
   }
@@ -90,7 +93,7 @@ public class ClienteController {
   	if (!foto.isEmpty()) {
 
   	  String uniqueFileName = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
-      Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+      Path rootPath = Paths.get(uploads).resolve(uniqueFileName);
       Path rootAbsolutePath = rootPath.toAbsolutePath();
 
       log.info("rootPath: " + rootPath);
