@@ -1,12 +1,11 @@
 package com.example.springboot.datajpa.app.models.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -29,6 +28,7 @@ public class Cliente implements Serializable {
   
   @NotEmpty
   @Email
+  @Column(name="email", unique = true)
   private String email;
 
   @NotNull
