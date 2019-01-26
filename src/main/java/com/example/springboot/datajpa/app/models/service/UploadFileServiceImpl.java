@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -62,5 +63,15 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
   public Path getPath(String filename) {
     return Paths.get(uploads).resolve(filename).toAbsolutePath();
+  }
+
+  @Override
+  public void delateAll() {
+    FileSystemUtils.deleteRecursively(Paths.get(uploads).toFile());
+  }
+
+  @Override
+  public void init() throws IOException {
+    Files.createDirectory(Paths.get(uploads));
   }
 }
