@@ -2,11 +2,6 @@ package com.example.springboot.datajpa.app.controllers;
 
 import com.example.springboot.datajpa.app.models.entity.Cliente;
 import com.example.springboot.datajpa.app.models.service.IClienteService;
-
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("cliente")
@@ -42,14 +40,14 @@ public class ClienteController {
   	Cliente cliente = new Cliente();
   	
   	model.put("cliente", cliente);
-  	model.put("titulo", "Formulario del Cliente");
+  	model.put("titulo", "Crear Cliente");
   	return "form";
   }
   
   @RequestMapping(value="/form", method = RequestMethod.POST)
   public String guardar(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus status) {
   	if(result.hasErrors()) {
-  		model.addAttribute("titulo", "Formulario del Cliente");
+  		model.addAttribute("titulo", "Crear Cliente");
   		return "form";
   	}
   	clienteService.save(cliente);

@@ -3,37 +3,40 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
   <header th:replace="layout/layout :: header"></header>
-  <div class="container">
-    <h1 class="text-secondary border border-success border-top-0 border-left-0 border-right-0" th:text="${titulo}">Title</h1>
-    <!-- <p><i class="fab fa-apple" data-fa-transform="grow-6 rotate-30"></i> Parrafo</p> -->
-    <p>
-        <a class="btn btn-default btn-xs" th:href="@{/form}"><i class="fas fa-user"></i> Crear Cliente</a>
-    </p>
-    
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Fecha</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cliente: ${clientes}">
-                <td th:text="${cliente.id}">1</td>
-                <td th:text="${cliente.nombre}">Juan</td>
-                <td th:text="${cliente.apellido}">Perez</td>
-                <td th:text="${cliente.email}">juan@mail.com</td>
-                <td th:text="${cliente.createAt}">2018-01-25</td>
-                <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
-                <td><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
-            </tr>
-        </tbody>
-    </table>
+  <div class="container py-4">
+    <div class="card bg-light">
+      <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
+      <div class="card-body">
+        <h4 class="card-title">
+          <a class="btn btn-primary btn-xs" th:href="@{/form}"><i class="fas fa-user"></i> Crear Cliente</a>
+        </h4>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Fecha</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="cliente: ${clientes}">
+            <td th:text="${cliente.id}">1</td>
+            <td th:text="${cliente.nombre}">Juan</td>
+            <td th:text="${cliente.apellido}">Perez</td>
+            <td th:text="${cliente.email}">juan@mail.com</td>
+            <td th:text="${cliente.createAt}">2018-01-25</td>
+            <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
+            <td><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <footer th:replace="layout/layout :: footer"></footer>
 </body>
