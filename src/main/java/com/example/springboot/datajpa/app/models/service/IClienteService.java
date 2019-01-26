@@ -1,16 +1,20 @@
 package com.example.springboot.datajpa.app.models.service;
 
-import java.util.List;
-
 import com.example.springboot.datajpa.app.models.entity.Cliente;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface IClienteService {
 	
-	 	List<Cliente> findAll();
+	List<Cliente> findAll();
 
-	  void save(Cliente cliente);
+	Page<Cliente> findAll(Pageable pageable);
+
+	void save(Cliente cliente);
 	  
-	  Cliente findOne(Long id);
+	Cliente findOne(Long id);
 	  
-	  void delete(Long id);
+	void delete(Long id);
 }
