@@ -1,5 +1,6 @@
 package com.example.springboot.datajpa.app.models.entity;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +38,7 @@ public class Cliente implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date createAt;
 
+  @ColumnDefault("''")
   private String foto;
   
   /*@PrePersist
