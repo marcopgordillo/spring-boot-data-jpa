@@ -34,20 +34,29 @@ public class Cliente implements Serializable {
   @Column(name="email", unique = true)
   private String email;
 
-  @NotNull
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Column(name = "create_at")
   @Temporal(TemporalType.DATE)
   private Date createAt;
 
+  @NotNull
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @Column(name = "dob")
+  @Temporal(TemporalType.DATE)
+  private Date dayOfBirth;
+
   @ColumnDefault("''")
   private String foto;
 
-  @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Factura> facturas;
 
   public Cliente() {
     facturas = new ArrayList<>();
+  }
+
+  @PrePersist
+  public void prePersist() {
+    createAt = new Date();
   }
 
   public String getNombreCompleto() {
@@ -112,6 +121,14 @@ public class Cliente implements Serializable {
 
   public void setFacturas(List<Factura> facturas) {
     this.facturas = facturas;
+  }
+
+  public Date getDayOfBirth() {
+    return dayOfBirth;
+  }
+
+  public void setDayOfBirth(Date dayOfBirth) {
+    this.dayOfBirth = dayOfBirth;
   }
 
   @Override

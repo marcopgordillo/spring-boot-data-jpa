@@ -15,9 +15,12 @@ public class ItemFactura implements Serializable {
 
   private Integer cantidad;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  // @JoinColumn(name = "producto_id") // No es necesario ya que se esta creando el producto_id en la misma table factura_items
+  private Producto producto;
+
   public Double calcularImporte() {
-    // TODO: Implementar este metodo cuando ya exista la relacion con Producto
-    return null;
+    return cantidad * producto.getPrecio();
   }
 
   public Long getId() {
@@ -34,5 +37,13 @@ public class ItemFactura implements Serializable {
 
   public void setCantidad(Integer cantidad) {
     this.cantidad = cantidad;
+  }
+
+  public Producto getProducto() {
+    return producto;
+  }
+
+  public void setProducto(Producto producto) {
+    this.producto = producto;
   }
 }

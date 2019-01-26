@@ -18,7 +18,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
-            <th>Fecha</th>
+            <th>Fecha de Nacimiento</th>
             <th>Editar</th>
             <th>Eliminar</th>
           </tr>
@@ -29,7 +29,7 @@
             <td th:text="${cliente.nombre}">Juan</td>
             <td th:text="${cliente.apellido}">Perez</td>
             <td th:text="${cliente.email}">juan@mail.com</td>
-            <td th:text="${cliente.createAt}">2018-01-25</td>
+            <td th:text="${cliente.dayOfBirth}">2018-01-25</td>
             <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
             <td><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
           </tr>
