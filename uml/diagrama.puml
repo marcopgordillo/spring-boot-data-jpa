@@ -1,0 +1,47 @@
+@startuml
+
+class Cliente <<Serializable>> {
+    __private data__
+    -id: Integer
+    -nombre: String
+    -apellido: String
+    -email: String
+    -createAt: Date
+    -foto: String
+    -facturas: List<Factura>
+    ..Methods..
+    +getNombreCompleto(): String
+    ..Getters and Setters..
+
+}
+class Factura <<Serializable>> {
+    __private data__
+    -id: Integer
+    -descripcion: String
+    -observacion: String
+    -fecha: Date
+    ..Methods..
+    +calcularTotal(): Double
+    ..Getters and Setters..
+}
+class LineaFactura <<Serializable>> {
+    __private data__
+    -id: Integer
+    -cantidad: Integer
+    ..Methods..
+    +calcularImporte(): Double
+    ..Getters and Setters..
+}
+class Producto <<Serializable>> {
+   __private data__
+   -id: Integer
+   -nombre: String
+   -precio: Double
+   ..Getters and Setters..
+}
+
+Cliente o-- Factura
+Factura *-- LineaFactura
+LineaFactura --> Producto
+
+@enduml
