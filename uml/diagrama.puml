@@ -19,12 +19,12 @@ class Factura <<Serializable>> {
     -id: Integer
     -descripcion: String
     -observacion: String
-    -fecha: Date
+    -createAt: Date
     ..Methods..
     +calcularTotal(): Double
     ..Getters and Setters..
 }
-class LineaFactura <<Serializable>> {
+class ItemFactura <<Serializable>> {
     __private data__
     -id: Integer
     -cantidad: Integer
@@ -41,7 +41,7 @@ class Producto <<Serializable>> {
 }
 
 Cliente o-- Factura
-Factura *-- LineaFactura
-LineaFactura --> Producto
+Factura *-- ItemFactura
+ItemFactura --> Producto
 
 @enduml

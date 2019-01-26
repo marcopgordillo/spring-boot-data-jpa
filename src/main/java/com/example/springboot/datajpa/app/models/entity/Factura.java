@@ -4,7 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "facturas")
@@ -27,9 +29,21 @@ public class Factura implements Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   private Cliente cliente;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "factura_id")
+  private List<ItemFactura> items;
+
+  public Factura() {
+    items =  new ArrayList<>();
+  }
+
   @PrePersist
   public void prePersist() {
     createAt = new Date();
+  }
+
+  public void addItemFactura(ItemFactura item) {
+    items.add(item);
   }
 
   public Long getId() {
@@ -70,5 +84,13 @@ public class Factura implements Serializable {
 
   public void setCliente(Cliente cliente) {
     this.cliente = cliente;
+  }
+
+  public List<ItemFactura> getItems() {
+    return items;
+  }
+
+  public void setItems(List<ItemFactura> items) {
+    this.items = items;
   }
 }
