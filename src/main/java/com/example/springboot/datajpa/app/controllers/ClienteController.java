@@ -57,6 +57,22 @@ public class ClienteController {
   	model.put("titulo", "Crear Cliente");
   	return "form";
   }
+
+  @GetMapping(value = "/ver/{id}")
+  public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+
+    Cliente cliente = clienteService.findOne(id);
+
+    if (cliente == null) {
+      flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
+      return "redirect:/listar";
+    }
+
+    model.put("titulo", "Detalla cliente: " + cliente.getNombreCompleto());
+    model.put("cliente", cliente);
+
+    return "ver";
+  }
   
   @RequestMapping(value="/form", method = RequestMethod.POST)
   public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {

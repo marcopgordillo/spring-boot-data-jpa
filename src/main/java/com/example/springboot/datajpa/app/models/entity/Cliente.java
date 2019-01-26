@@ -46,6 +46,10 @@ public class Cliente implements Serializable {
   	createAt = new Date();
   }*/
 
+  public String getNombreCompleto() {
+    return nombre + " " + apellido;
+  }
+
   public Long getId() {
     return id;
   }
