@@ -40,7 +40,7 @@ public class FacturaController {
       return "redirect:/listar";
     }
 
-    model.addAttribute("factura", factura);\
+    model.addAttribute("factura", factura);
     model.addAttribute("titulo", "Factura: ".concat(factura.getDescripcion()));
     return "factura/ver";
   }
