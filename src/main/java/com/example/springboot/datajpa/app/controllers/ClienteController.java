@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.Map;
 
 @Controller
@@ -59,6 +62,12 @@ public class ClienteController {
 
     if (auth != null) {
       logger.info("Utilizando forma estática SecurityContextHolder.getContext().getAuthentication(): Usuario autenticado, username: ".concat(auth.getName()));
+    }
+
+    if (hasRole("ROLE_ADMIN")) {
+      logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso!"));
+    } else {
+      logger.info("Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
     }
 
     Pageable pageRequest = PageRequest.of(page, 5);
@@ -186,5 +195,30 @@ public class ClienteController {
   	}
 
   	return "redirect:/listar";
+  }
+
+  private boolean hasRole(String role) {
+
+    SecurityContext context = SecurityContextHolder.getContext();
+
+    if (context == null) {
+      return false;
+    }
+
+    Authentication auth = context.getAuthentication();
+
+    if (auth == null) {
+      return false;
+    }
+
+    Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+    for (GrantedAuthority authority : authorities) {
+      if (role.equals(authority.getAuthority())) {
+        logger.info("Hola usuario '".concat(auth.getName()).concat("' tu rol es: ").concat(authority.getAuthority()));
+        return true;
+      }
+    }
+
+    return false;
   }
 }
