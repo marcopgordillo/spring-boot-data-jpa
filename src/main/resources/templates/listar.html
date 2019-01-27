@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
-  <header th:replace="layout/layout :: header"></header>
+  <header th:replace="layout/layout :: header('listar')"></header>
   <div class="container py-4">
     <div class="card bg-light">
       <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
