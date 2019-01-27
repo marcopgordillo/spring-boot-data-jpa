@@ -1,8 +1,9 @@
 package com.example.springboot.datajpa.app.models.service;
 
 import com.example.springboot.datajpa.app.models.dao.IClienteDao;
+import com.example.springboot.datajpa.app.models.dao.IProductoDao;
 import com.example.springboot.datajpa.app.models.entity.Cliente;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.example.springboot.datajpa.app.models.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,12 @@ import java.util.List;
 @Service
 public class ClienteServiceImpl implements IClienteService {
 	
-	@Qualifier("clienteDaoJPA")
 	private final IClienteDao clienteDao;
+	private final IProductoDao productoDao;
 	
-	public ClienteServiceImpl(IClienteDao clienteDao) {
+	public ClienteServiceImpl(IClienteDao clienteDao, IProductoDao productoDao) {
 		this.clienteDao = clienteDao;
+		this.productoDao = productoDao;
 	}
 
 	@Override
@@ -53,5 +55,10 @@ public class ClienteServiceImpl implements IClienteService {
 	@Transactional
 	public void delete(Long id) {
 		clienteDao.delete(id);
+	}
+
+	@Override
+	public List<Producto> findByNombre(String term) {
+		return productoDao.findByNombre(term);
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.springboot.datajpa.app.models.service;
 
 import com.example.springboot.datajpa.app.models.entity.Cliente;
+import com.example.springboot.datajpa.app.models.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +20,6 @@ public interface IClienteService {
 	boolean exists(Long id);
 	  
 	void delete(Long id);
+
+	List<Producto> findByNombre(String term);
 }
