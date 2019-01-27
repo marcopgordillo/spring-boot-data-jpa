@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +32,7 @@ import java.util.Map;
 @SessionAttributes("cliente")
 public class ClienteController {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private final IClienteService clienteService;
   private final IUploadFileService uploadFileService;
@@ -47,7 +49,18 @@ public class ClienteController {
   }
 
   @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication) {
+
+    if (authentication != null) {
+      logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+    }
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    if (auth != null) {
+      logger.info("Utilizando forma estática SecurityContextHolder.getContext().getAuthentication(): Usuario autenticado, username: ".concat(auth.getName()));
+    }
+
     Pageable pageRequest = PageRequest.of(page, 5);
 
     Page<Cliente> clientes = clienteService.findAll(pageRequest);
