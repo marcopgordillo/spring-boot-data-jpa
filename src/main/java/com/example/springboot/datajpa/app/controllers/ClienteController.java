@@ -92,7 +92,7 @@ public class ClienteController {
       return "redirect:/listar";
     }
 
-    Cliente cliente = clienteService.findOne(id);
+    Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 
     model.put("titulo", "Detalle cliente: " + cliente.getNombreCompleto());
     model.put("cliente", cliente);

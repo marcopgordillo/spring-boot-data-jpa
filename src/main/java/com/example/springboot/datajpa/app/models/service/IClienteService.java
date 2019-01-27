@@ -18,6 +18,8 @@ public interface IClienteService {
 	  
 	Cliente findOne(Long id);
 
+	Cliente fetchByIdWithFacturas(Long id);
+
 	boolean exists(Long id);
 	  
 	void delete(Long id);
