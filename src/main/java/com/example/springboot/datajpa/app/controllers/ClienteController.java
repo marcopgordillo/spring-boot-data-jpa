@@ -111,7 +111,7 @@ public class ClienteController {
   	return "form";
   }
 
-  @Secured("ROLE_USER")
+  @Secured({"ROLE_USER", "ROLE_ADMIN"})
   @GetMapping("/uploads/{filename:.*}")
   public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
 
@@ -128,6 +128,7 @@ public class ClienteController {
   }
 
   @PreAuthorize("hasRole('ROLE_USER')")
+//  @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
   @GetMapping(value = "/ver/{id}")
   public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
