@@ -47,6 +47,10 @@ $(document).ready(function () {
             return false;
         }
     });
+    $('form').submit(function () {
+        $('#plantillaItemsFactura').remove();
+        return;
+    });
 });
 
 var itemsHelper = {
@@ -91,6 +95,6 @@ var itemsHelper = {
             total += parseFloat(itemsHelper.formatFloat($(this).html()));
         });
 
-        $('#gran_total').html(total);
+        $('#gran_total').html(this.formatCurrency(total));
     }
 };

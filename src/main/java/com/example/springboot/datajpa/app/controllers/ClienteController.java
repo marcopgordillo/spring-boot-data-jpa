@@ -94,7 +94,7 @@ public class ClienteController {
 
     Cliente cliente = clienteService.findOne(id);
 
-    model.put("titulo", "Detalla cliente: " + cliente.getNombreCompleto());
+    model.put("titulo", "Detalle cliente: " + cliente.getNombreCompleto());
     model.put("cliente", cliente);
 
     return "ver";
