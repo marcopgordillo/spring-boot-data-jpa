@@ -1,6 +1,7 @@
 package com.example.springboot.datajpa.app.models.service;
 
 import com.example.springboot.datajpa.app.models.entity.Cliente;
+import com.example.springboot.datajpa.app.models.entity.Factura;
 import com.example.springboot.datajpa.app.models.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,6 @@ public interface IClienteService {
 	void delete(Long id);
 
 	List<Producto> findByNombre(String term);
+
+	void saveFactura(Factura factura);
 }
