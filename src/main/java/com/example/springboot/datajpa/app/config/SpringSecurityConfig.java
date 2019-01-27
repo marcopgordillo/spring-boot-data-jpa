@@ -7,18 +7,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
 
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final LoginSuccessHandler loginSuccessHandler;
+  private final DataSource dataSource;
+  private final BCryptPasswordEncoder passwordEncoder;
 
-  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler) {
+  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, DataSource dataSource, BCryptPasswordEncoder passwordEncoder) {
     this.loginSuccessHandler = loginSuccessHandler;
+    this.dataSource = dataSource;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -45,11 +49,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * UserBuilder users = User.withDefaultPasswordEncoder();
      * */
 
-    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    /*PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     User.UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 
     builder.inMemoryAuthentication()
             .withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
             .withUser(users.username("user").password("12345").roles("USER"));
+  }*/
+    builder.jdbcAuthentication()
+            .dataSource(dataSource)
+            .passwordEncoder(passwordEncoder)
+            .usersByUsernameQuery("select username, password, enabled from users where username=?")
+            .authoritiesByUsernameQuery("select u.username, a.authority from authorities a inner join users u on (a.user_id=u.id) where u.username=?");
   }
 }
