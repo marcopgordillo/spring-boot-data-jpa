@@ -40,6 +40,10 @@ $(document).ready(function () {
                 itemsHelper.calcularImporte(ui.item.value, ui.item.precio, $(this).val());
             });
 
+            $('#boton_eliminar_' + ui.item.value).click(function () {
+                itemsHelper.eliminarLineaFactura(ui.item.value);
+            });
+
             return false;
         }
     });
@@ -68,5 +72,8 @@ var itemsHelper = {
     },
     formatCurrency: function (valor) {
         return '$' + parseFloat(valor).toFixed(2);
+    },
+    eliminarLineaFactura: function (id) {
+        $('#row_' + id).remove();
     }
 };
