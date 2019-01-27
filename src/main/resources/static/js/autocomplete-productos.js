@@ -29,7 +29,19 @@ $(document).ready(function () {
 
             $('#cargarItemProductos tbody').append(linea);
 
+            itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
+
+            $('#cantidad_' + ui.item.value).change(function () {
+                itemsHelper.calcularImporte(ui.item.value, ui.item.precio, this.value);
+            });
+
             return false;
         }
     });
 });
+
+var itemsHelper = {
+    calcularImporte: function (id, precio, cantidad) {
+        $('#total_importe_' + id).html(parseFloat(precio) * parseInt(cantidad));
+    }
+};
