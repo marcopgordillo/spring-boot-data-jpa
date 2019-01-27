@@ -31,9 +31,9 @@
             <td th:text="${cliente.apellido}">Perez</td>
             <td th:text="${cliente.email}">juan@mail.com</td>
             <td class="text-center" th:text="${cliente.dayOfBirth}">2018-01-25</td>
-            <td class="text-center"><a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}"><i class="fas fa-plus-circle"></i><span class="d-none">Crear Factura</span></a></td>
-            <td class="text-center"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i><span class="d-none">Editar</span></a></td>
-            <td class="text-center"><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i><span class="d-none">Eliminar</span></a></td>
+            <td class="text-center"><a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}"><i class="fas fa-plus-circle"></i><span class="sr-only">Crear Factura</span></a></td>
+            <td class="text-center"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i><span class="sr-only">Editar</span></a></td>
+            <td class="text-center"><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i><span class="sr-only">Eliminar</span></a></td>
           </tr>
           </tbody>
         </table>
