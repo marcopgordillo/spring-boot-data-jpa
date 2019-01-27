@@ -32,6 +32,7 @@
             <th>Fecha</th>
             <th class="text-center">Total</th>
             <th class="text-center">Ver Detalle</th>
+            <th class="text-center">Eliminar</th>
           </tr>
           </thead>
           <tbody>
@@ -46,6 +47,7 @@
                 <span class="d-none">Ver detalle factura</span>
               </a>
             </td>
+            <td class="text-center"><a class="btn btn-danger btn-xs eliminar" th:href="@{'/factura/eliminar/' + ${factura.id}}"><i class="far fa-trash-alt"></i><span class="d-none">Eliminar</span></a></td>
           </tr>
           </tbody>
         </table>
