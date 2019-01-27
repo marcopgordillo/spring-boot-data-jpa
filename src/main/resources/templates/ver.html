@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
   <header th:replace="layout/layout :: header"></header>
@@ -9,7 +10,9 @@
       <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
       <div class="card-body">
         <div class="card-title">
-          <a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}"><i class="fas fa-plus-circle"></i> Crear Factura</a>
+          <a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" sec:authorize="hasRole('ROLE_ADMIN')">
+            <i class="fas fa-plus-circle"></i> Crear Factura
+          </a>
         </div>
 
         <img th:if="${#strings.length(cliente.foto) > 0}" class="img-thumbnail rounded float-left" th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.nombreCompleto}" />
@@ -31,8 +34,8 @@
             <th>Descripción</th>
             <th>Fecha</th>
             <th class="text-center">Total</th>
-            <th class="text-center">Ver Detalle</th>
-            <th class="text-center">Eliminar</th>
+            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Ver Detalle</th>
+            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
           </tr>
           </thead>
           <tbody>
@@ -41,13 +44,18 @@
             <td th:text="${factura.descripcion}"></td>
             <td th:text="${factura.createAt}"></td>
             <td class="text-right" th:text="'$' + ${#numbers.formatDecimal(factura.total,3,2)}"></td>
-            <td class="text-center">
+            <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
               <a class="btn btn-primary btn-xs" th:href="@{'/factura/ver/' + ${factura.id}}">
                 <i class="fas fa-eye"></i>
                 <span class="sr-only">Ver detalle factura</span>
               </a>
             </td>
-            <td class="text-center"><a class="btn btn-danger btn-xs eliminar" th:href="@{'/factura/eliminar/' + ${factura.id}}"><i class="far fa-trash-alt"></i><span class="sr-only">Eliminar</span></a></td>
+            <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="btn btn-danger btn-xs eliminar" th:href="@{'/factura/eliminar/' + ${factura.id}}">
+                <i class="far fa-trash-alt"></i>
+                <span class="sr-only">Eliminar</span>
+              </a>
+            </td>
           </tr>
           </tbody>
         </table>
