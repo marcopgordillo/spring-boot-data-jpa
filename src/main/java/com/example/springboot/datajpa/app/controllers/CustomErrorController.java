@@ -39,7 +39,7 @@ public class CustomErrorController implements ErrorController {
     }
     
     model.addAttribute("errorMsg", errorMsg);    
-    return "error";
+    return "errors/error";
   }
 
 	@Override
