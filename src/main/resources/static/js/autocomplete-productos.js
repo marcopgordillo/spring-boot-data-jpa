@@ -21,18 +21,23 @@ $(document).ready(function () {
         select: function (event, ui) {
             // $('#buscar_producto').val(ui.item.label);
 
+            if (itemsHelper.hasProducto(ui.item.value)) {
+                itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
+                return false;
+            }
+
             var linea = $('#plantillaItemsFactura').html();
 
             linea = linea.replace(/{ID}/g, ui.item.value);
             linea = linea.replace(/{NOMBRE}/g, ui.item.label);
-            linea = linea.replace(/{PRECIO}/g, ui.item.precio);
+            linea = linea.replace(/{PRECIO}/g, itemsHelper.formatCurrency(ui.item.precio));
 
             $('#cargarItemProductos tbody').append(linea);
 
             itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
 
             $('#cantidad_' + ui.item.value).change(function () {
-                itemsHelper.calcularImporte(ui.item.value, ui.item.precio, this.value);
+                itemsHelper.calcularImporte(ui.item.value, ui.item.precio, $(this).val());
             });
 
             return false;
@@ -42,6 +47,26 @@ $(document).ready(function () {
 
 var itemsHelper = {
     calcularImporte: function (id, precio, cantidad) {
-        $('#total_importe_' + id).html(parseFloat(precio) * parseInt(cantidad));
+        $('#total_importe_' + id).html(this.formatCurrency(parseFloat(precio) * parseInt(cantidad)));
+    },
+    hasProducto: function (id) {
+        var resultado = false;
+
+        $('input[name="item_id[]"]').each(function () {
+            if (parseInt(id) === parseInt($(this).val())) {
+                resultado = true;
+            }
+        });
+
+        return resultado;
+    },
+    incrementaCantidad: function (id, precio) {
+        var cantidad = $('#cantidad_' + id).val() ? parseInt($('#cantidad_' + id).val()) : 0;
+        $('#cantidad_' + id).val(++cantidad);
+        this.calcularImporte(id, precio, cantidad);
+
+    },
+    formatCurrency: function (valor) {
+        return '$' + parseFloat(valor).toFixed(2);
     }
 };
