@@ -18,6 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -53,7 +55,7 @@ public class ClienteController {
   }
 
   @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication) {
+  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication, HttpServletRequest request) {
 
     if (authentication != null) {
       logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
@@ -69,6 +71,20 @@ public class ClienteController {
       logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso!"));
     } else {
       logger.info("Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
+    }
+
+    SecurityContextHolderAwareRequestWrapper securityContex = new SecurityContextHolderAwareRequestWrapper(request, "ROLE_");
+
+    if (securityContex.isUserInRole("ADMIN")) {
+      logger.info("Forma usando SecurityContextHolderAwareRequestWrapper: Hola ".concat(auth.getName()).concat(" tienes acceso!"));
+    } else {
+      logger.info("Forma usando SecurityContextHolderAwareRequestWrapper: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
+    }
+
+    if (request.isUserInRole("ROLE_ADMIN")) {
+      logger.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" tienes acceso!"));
+    } else {
+      logger.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
     }
 
     Pageable pageRequest = PageRequest.of(page, 5);
