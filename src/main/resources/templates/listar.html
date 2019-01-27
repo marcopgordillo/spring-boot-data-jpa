@@ -12,15 +12,16 @@
         </h4>
 
         <table class="table table-striped">
-          <thead>
+          <thead class="thead-dark">
           <tr>
-            <th>id</th>
+            <th class="text-center">id</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th class="text-center">Fecha de Nacimiento</th>
+            <th class="text-center">Crear Factura</th>
+            <th class="text-center">Editar</th>
+            <th class="text-center">Eliminar</th>
           </tr>
           </thead>
           <tbody>
@@ -29,9 +30,10 @@
             <td th:text="${cliente.nombre}">Juan</td>
             <td th:text="${cliente.apellido}">Perez</td>
             <td th:text="${cliente.email}">juan@mail.com</td>
-            <td th:text="${cliente.dayOfBirth}">2018-01-25</td>
-            <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
-            <td><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
+            <td class="text-center" th:text="${cliente.dayOfBirth}">2018-01-25</td>
+            <td class="text-center"><a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}"><i class="fas fa-plus-circle"></i></a></td>
+            <td class="text-center"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"><i class="far fa-edit"></i></a></td>
+            <td class="text-center"><a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}"><i class="far fa-trash-alt"></i></a></td>
           </tr>
           </tbody>
         </table>
