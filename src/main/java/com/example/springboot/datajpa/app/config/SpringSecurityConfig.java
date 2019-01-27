@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -17,14 +19,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/form/**", "/eliminar/**", "/factura/**").hasAnyRole("ADMIN")
             .anyRequest().authenticated()
             .and()
-            .formLogin().permitAll()
+            .formLogin().loginPage("/login").permitAll()
             .and()
             .logout().permitAll();
   }
 
   @Autowired
   public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
-    User.UserBuilder users = User.withDefaultPasswordEncoder();
+    /*
+     * Deprecated
+     * UserBuilder users = User.withDefaultPasswordEncoder();
+     * */
+
+    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    User.UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 
     builder.inMemoryAuthentication()
             .withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
