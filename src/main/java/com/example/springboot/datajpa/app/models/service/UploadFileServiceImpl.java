@@ -66,7 +66,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
   }
 
   @Override
-  public void delateAll() {
+  public void deleteAll() {
     FileSystemUtils.deleteRecursively(Paths.get(uploads).toFile());
   }
 

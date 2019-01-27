@@ -20,7 +20,7 @@ public class SpringBootDataJpaApplication implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
-    uploadFileService.delateAll();
+    uploadFileService.deleteAll();
     uploadFileService.init();
   }
 }

@@ -17,7 +17,7 @@ public interface IUploadFileService {
 
   Path getPath(String filename);
 
-  void delateAll();
+  void deleteAll();
 
   void init() throws IOException;
 }
