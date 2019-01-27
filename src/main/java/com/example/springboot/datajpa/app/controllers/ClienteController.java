@@ -7,6 +7,7 @@ import com.example.springboot.datajpa.app.util.paginator.PageRender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +35,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -44,20 +46,19 @@ public class ClienteController {
 
   private final IClienteService clienteService;
   private final IUploadFileService uploadFileService;
-
-  @Value("${application.controller.titulo}")
-  private String titulo;
+  private final MessageSource messageSource;
 
   @Value("${application.controller.uploads}")
   private String uploads;
 
-  public ClienteController(IClienteService clienteService, IUploadFileService uploadFileService) {
+  public ClienteController(IClienteService clienteService, IUploadFileService uploadFileService, MessageSource messageSource) {
     this.clienteService = clienteService;
     this.uploadFileService = uploadFileService;
+    this.messageSource = messageSource;
   }
 
   @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication, HttpServletRequest request) {
+  public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication, HttpServletRequest request, Locale locale) {
 
     if (authentication != null) {
       logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
@@ -75,9 +76,9 @@ public class ClienteController {
       logger.info("Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
     }
 
-    SecurityContextHolderAwareRequestWrapper securityContex = new SecurityContextHolderAwareRequestWrapper(request, "ROLE_");
+    SecurityContextHolderAwareRequestWrapper securityContext = new SecurityContextHolderAwareRequestWrapper(request, "ROLE_");
 
-    if (securityContex.isUserInRole("ADMIN")) {
+    if (securityContext.isUserInRole("ADMIN")) {
       logger.info("Forma usando SecurityContextHolderAwareRequestWrapper: Hola ".concat(auth.getName()).concat(" tienes acceso!"));
     } else {
       logger.info("Forma usando SecurityContextHolderAwareRequestWrapper: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
@@ -95,7 +96,7 @@ public class ClienteController {
 
     PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
 
-    model.addAttribute("titulo", titulo);
+    model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
     model.addAttribute("clientes", clientes);
     model.addAttribute("page", pageRender);
     return "listar";
