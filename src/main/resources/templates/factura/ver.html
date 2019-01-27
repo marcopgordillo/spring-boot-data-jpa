@@ -21,7 +21,6 @@
         <li class="list-group-item" th:text="'Folio: ' + ${factura.id}"></li>
         <li class="list-group-item" th:text="'Descripción: ' + ${factura.descripcion}"></li>
         <li class="list-group-item" th:text="'Fecha: ' + ${factura.createAt}"></li>
-        <li class="list-group-item" th:text="'Observación: ' + ${factura.observacion}" th:if="${factura.observacion != null}"></li>
       </ul>
 
       <div class="alert alert-info my-4" th:if="${#lists.isEmpty(factura.items)}" th:text="'No hay lineas para la factura' + ${factura.descripcion}"></div>
@@ -45,7 +44,19 @@
         </tbody>
       </table>
 
-      <h5 class="float-right">Total: <span class="badge badge-secondary" th:text="'$' + ${#numbers.formatDecimal(factura.total,3,2)}"></span></h5>
+      <h5 class="float-right">
+        Total: <span class="badge badge-secondary" th:text="'$' + ${#numbers.formatDecimal(factura.total,3,2)}"></span>
+      </h5>
+
+      <div class="card border-info mb-4 observacion" >
+        <div class="card-header">Observaciones</div>
+        <div class="card-body">
+          <p class="card-text" th:text="${factura.observacion}" th:if="${not #strings.isEmpty(factura.observacion)}"></p>
+          <h4 class="card-title" th:if="${#strings.isEmpty(factura.observacion)}">No tiene observaciones</h4>
+        </div>
+      </div>
+
+      <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}">&laquo; volver</a>
 
     </div>
   </div>

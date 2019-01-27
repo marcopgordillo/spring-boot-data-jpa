@@ -1,3 +1,7 @@
 div.card-body img {
     max-width: 25%;
 }
+
+.observacion {
+    max-width: 20rem;
+}
