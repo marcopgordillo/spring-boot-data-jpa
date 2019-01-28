@@ -7,24 +7,38 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.util.Locale;
 import java.util.Map;
 
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView {
+
+  private final MessageSource messageSource;
+  private final LocaleResolver localeResolver;
+
+  public FacturaPdfView(MessageSource messageSource, LocaleResolver localeResolver) {
+    this.messageSource = messageSource;
+    this.localeResolver = localeResolver;
+  }
+
   @Override
-  protected void buildPdfDocument(Map<String, Object> map, Document document, PdfWriter pdfWriter, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+  protected void buildPdfDocument(Map<String, Object> map, Document document, PdfWriter pdfWriter, HttpServletRequest request, HttpServletResponse response) throws Exception {
     Factura factura = (Factura) map.get("factura");
+
+    Locale locale = localeResolver.resolveLocale(request);
 
     PdfPTable tabla1 = new PdfPTable(1);
     tabla1.setSpacingAfter(20);
 
-    PdfPCell cell = new PdfPCell(new Phrase("Datos del Cliente"));
+    PdfPCell cell = new PdfPCell(new Phrase(messageSource.getMessage("text.factura.ver.datos.cliente", null, locale)));
     cell.setBackgroundColor(new Color(184, 218, 255));
     cell.setPadding(8f);
 
@@ -37,7 +51,7 @@ public class FacturaPdfView extends AbstractPdfView {
     PdfPTable tabla2 = new PdfPTable(1);
     tabla2.setSpacingAfter(20);
 
-    cell = new PdfPCell(new Phrase("Datos de la Factura"));
+    cell = new PdfPCell(new Phrase(messageSource.getMessage("text.factura.ver.datos.factura", null, locale)));
     cell.setBackgroundColor(new Color(195, 230, 203));
     cell.setPadding(8f);
 
