@@ -8,6 +8,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.context.MessageSource;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -35,6 +36,8 @@ public class FacturaPdfView extends AbstractPdfView {
 
     Locale locale = localeResolver.resolveLocale(request);
 
+    MessageSourceAccessor messages = getMessageSourceAccessor();
+
     PdfPTable tabla1 = new PdfPTable(1);
     tabla1.setSpacingAfter(20);
 
@@ -56,7 +59,7 @@ public class FacturaPdfView extends AbstractPdfView {
     cell.setPadding(8f);
 
     tabla2.addCell(cell);
-    tabla2.addCell("Folio: " + factura.getId());
+    tabla2.addCell(messages.getMessage("text.cliente.factura.folio") + ": " + factura.getId());
     tabla2.addCell("Descripción: " + factura.getDescripcion());
     tabla2.addCell("Fecha: " + factura.getCreateAt());
 
