@@ -21,7 +21,7 @@ public class FacturaXlsxView extends AbstractXlsxView {
 
         Factura factura = (Factura) model.get("factura");
 
-        response.setHeader("Content-Disposition", "attachment; filename=\""+ messages.getMessage("text.factura.documento.titulo") +" Nro. " + factura.getId() + "\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\""+ messages.getMessage("text.factura.documento.titulo") +" Nro. " + factura.getId() + ".xlsx\"");
 
         Sheet sheet = workbook.createSheet("Factura Spring " + factura.getId());
 
