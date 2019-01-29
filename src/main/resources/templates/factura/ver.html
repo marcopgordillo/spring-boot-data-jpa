@@ -10,7 +10,8 @@
     <div class="card-body">
       <h4 class="card-title">
         <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}" th:utext="#{text.global.volver}">&laquo; volver</a>
-        <a class="btn btn-danger btn-xs float-right" th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}"><i class="far fa-file-pdf"></i><span class="sr-only">PDF</span></a>
+        <a class="btn btn-danger btn-xs float-right mx-2" th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}"><i class="far fa-file-pdf"></i><span class="sr-only">PDF</span></a>
+        <a class="btn btn-success btn-xs float-right" th:href="@{'/factura/ver/' + ${factura.id}(format=xlsx)}"><i class="far fa-file-excel"></i><span class="sr-only">EXCEL</span></a>
       </h4>
       <ul class="list-group my-2">
         <li class="list-group-item list-group-item-primary" th:text="#{text.factura.ver.datos.cliente}">Datos del Cliente</li>
