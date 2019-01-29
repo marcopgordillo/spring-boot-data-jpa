@@ -1,7 +1,6 @@
 package com.example.springboot.datajpa.app.view.csv;
 
 import com.example.springboot.datajpa.app.models.entity.Cliente;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.AbstractView;
 import org.supercsv.io.CsvBeanWriter;
@@ -10,10 +9,11 @@ import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
-//@Component("listar.csv")
-@Component("listar") //Es la unica vista con este nombre no es necesario la extension
+@Component("listar.csv") // Es necesario especificar la extension csv en application.properties
+//@Component("listar") //Es la unica vista con este nombre no es necesario la extension
 public class ClienteCsvView extends AbstractView {
 
     public ClienteCsvView() {
@@ -32,7 +32,7 @@ public class ClienteCsvView extends AbstractView {
         response.setContentType(getContentType());
         response.setCharacterEncoding("UTF-8");
 
-        Page<Cliente> clientes = (Page<Cliente>) model.get("clientes");
+        List<Cliente> clientes = (List<Cliente>) model.get("clientes");
 
         ICsvBeanWriter beanWriter = new CsvBeanWriter(response.getWriter(),  CsvPreference.EXCEL_PREFERENCE);
 
