@@ -9,30 +9,30 @@
     <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
     <div class="card-body">
       <h4 class="card-title">
-        <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}">&laquo; volver</a>
+        <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}" th:utext="#{text.global.volver}">&laquo; volver</a>
         <a class="btn btn-danger btn-xs float-right" th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}"><i class="far fa-file-pdf"></i><span class="sr-only">PDF</span></a>
       </h4>
       <ul class="list-group my-2">
-        <li class="list-group-item list-group-item-primary">Datos del Cliente</li>
+        <li class="list-group-item list-group-item-primary" th:text="#{text.factura.ver.datos.cliente}">Datos del Cliente</li>
         <li class="list-group-item" th:text="${factura.cliente}"></li>
         <li class="list-group-item" th:text="${factura.cliente.email}"></li>
       </ul>
       <ul class="list-group">
-        <li class="list-group-item list-group-item-success">Datos de la Factura</li>
+        <li class="list-group-item list-group-item-success" th:text="#{text.factura.ver.datos.factura}">Datos de la Factura</li>
         <li class="list-group-item" th:text="'Folio: ' + ${factura.id}"></li>
         <li class="list-group-item" th:text="'Descripción: ' + ${factura.descripcion}"></li>
         <li class="list-group-item" th:text="'Fecha: ' + ${factura.createAt}"></li>
       </ul>
 
-      <div class="alert alert-info my-4" th:if="${#lists.isEmpty(factura.items)}" th:text="'No hay lineas para la factura' + ${factura.descripcion}"></div>
+      <div class="alert alert-info my-4" th:if="${#lists.isEmpty(factura.items)}" th:text="#{text.factura.ver.no.lineas} + ' ' + ${factura.descripcion}"></div>
 
       <table class="table table-striped table-hover table-bordered my-2" th:if="${not #lists.isEmpty(factura.items)}">
         <thead class="thead-light">
           <tr>
-            <th class="text-center">Producto</th>
-            <th class="text-center">Precio</th>
-            <th class="text-center">Cantidad</th>
-            <th class="text-center">Importe</th>
+            <th class="text-center" th:text="#{text.factura.form.item.nombre}">Producto</th>
+            <th class="text-center" th:text="#{text.factura.form.item.precio}">Precio</th>
+            <th class="text-center" th:text="#{text.factura.form.item.cantidad}">Cantidad</th>
+            <th class="text-center" th:text="#{text.factura.form.item.total}">Importe</th>
           </tr>
         </thead>
         <tbody>
@@ -46,18 +46,18 @@
       </table>
 
       <h5 class="float-right">
-        Total: <span class="badge badge-secondary" th:text="'$' + ${#numbers.formatDecimal(factura.total,3,2)}"></span>
+        <span th:text="#{text.factura.form.total}">Gran Total</span>: <span class="badge badge-secondary" th:text="'$' + ${#numbers.formatDecimal(factura.total,3,2)}"></span>
       </h5>
 
       <div class="card border-info mb-4 observacion" >
-        <div class="card-header">Observaciones</div>
+        <div class="card-header" th:text="#{text.factura.form.observacion}">Observaciones</div>
         <div class="card-body">
           <p class="card-text" th:text="${factura.observacion}" th:if="${not #strings.isEmpty(factura.observacion)}"></p>
-          <h4 class="card-title" th:if="${#strings.isEmpty(factura.observacion)}">No tiene observaciones</h4>
+          <h4 class="card-title" th:if="${#strings.isEmpty(factura.observacion)}" th:text="#{text.factura.ver.no.observaciones}">No tiene observaciones</h4>
         </div>
       </div>
 
-      <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}">&laquo; volver</a>
+      <a class="btn btn-light btn-xs" th:href="@{'/ver/' + ${factura.cliente.id}}" th:utext="#{text.global.volver}">&laquo; volver</a>
 
     </div>
   </div>

@@ -13,22 +13,22 @@
   <body>
     <header th:fragment="header">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Spring Boot</a>
+        <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item" th:classappend="${#request.getServletPath() == '/' ? 'active' : ''}">
-              <a class="nav-link" href="/">Home <span class="sr-only"  th:if="${#request.getServletPath() == '/'}">(current)</span></a>
+              <a class="nav-link" th:href="@{/}" th:text="#{text.menu.home}">Home <span class="sr-only"  th:if="${#request.getServletPath() == '/'}">(current)</span></a>
             </li>
             <li class="nav-item" th:classappend="${#request.getServletPath() == '/listar' ? 'active' : ''}">
-              <a class="nav-link" th:href="@{/listar}">Cliente <span class="sr-only" th:if="${#request.getServletPath() == '/listar'}">(current)</span></a>
+              <a class="nav-link" th:href="@{/listar}" th:text="#{text.menu.customer}">Cliente <span class="sr-only" th:if="${#request.getServletPath() == '/listar'}">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-              <a class="btn btn-outline-primary" th:href="@{/login}">Log in</a>
+              <a class="btn btn-outline-primary" th:href="@{/login}" th:text="#{text.menu.signin}">Log in</a>
             </li>
             <li class="dropdown" sec:authorize="isAuthenticated()">
               <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +37,7 @@
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <form th:action="@{/logout}" method="post">
-                  <input class="dropdown-item" type="submit" value="Logout" />
+                  <input class="dropdown-item" type="submit" th:value="#{text.menu.signout}" />
                   <!-- Opcional Spring security anade esto automaticamente -->
                   <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                 </form>
@@ -64,18 +64,16 @@
       <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
     </header>
 
-    <div class="container"></div>
-
     <footer class="container" th:fragment="footer">
       <hr />
       <img width="200px" th:src="@{/images/spring-logo.png}" alt="Spring Logo" />
       <p sec:authorize="isAuthenticated()">
-        Usuario logueado <span sec:authentication="name"></span> | Roles: <span sec:authentication="principal.authorities"></span>
+        <span th:text="#{text.footer.user}">Usuario logeado:</span> <span sec:authentication="name"></span> | <span th:text="#{text.footer.roles}">Roles:</span> <span sec:authentication="principal.authorities"></span>
       </p>
-        Powered By <a href="https://projects.spring.io/spring-boot/">Spring Boot</a> y
-        <a href="http://www.thymeleaf.org">Thymeleaf</a>.
+      <p th:utext="#{text.footer.powered}">
+        Powered by <a href="https://projects.spring.io/spring-boot/">Spring Boot</a> y <a href="http://www.thymeleaf.org">Thymeleaf</a>.
       </p>
-      <p>
+      <p th:utext="#{text.footer.copy}">
         Este Proyecto fue desarrollado en IDE Eclipse + Spring plugins (STS Spring Tool), profesor Andrés
         Guzman. <br /> &copy; Company 2019, Inc. Todos los derechos reservados. Terminos de Uso y privacidad.
       </p>

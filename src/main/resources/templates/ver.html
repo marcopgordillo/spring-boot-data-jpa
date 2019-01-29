@@ -3,6 +3,9 @@
                 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
+
+  <div id="i18n_eliminar_factura" th:text="#{text.cliente.factura.eliminarOk}" style="display: none;"></div>
+
   <header th:replace="layout/layout :: header"></header>
 
   <div class="container py-4">
@@ -11,7 +14,7 @@
       <div class="card-body">
         <div class="card-title">
           <a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}" sec:authorize="hasRole('ROLE_ADMIN')">
-            <i class="fas fa-plus-circle"></i> Crear Factura
+            <i class="fas fa-plus-circle"></i> <span th:text="#{text.cliente.factura.crear}">Crear Factura</span>
           </a>
         </div>
 
@@ -24,18 +27,18 @@
           <li class="list-group-item" th:text="${cliente.dayOfBirth}"></li>
         </ul>
 
-        <div class="alert alert-info my-4" th:if="${#lists.isEmpty(cliente.facturas)}" th:text="'No hay facturas asignadas para el cliente ' + ${cliente.nombreCompleto}">
+        <div class="alert alert-info my-4" th:if="${#lists.isEmpty(cliente.facturas)}" th:text="#{text.cliente.detalle.no.facturas} + ' ' + ${cliente}">
         </div>
 
         <table class="table table-bordered table-striped my-4" th:if="${not #lists.isEmpty(cliente.facturas)}">
           <thead class="thead-dark">
           <tr>
-            <th>Id</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            <th class="text-center">Total</th>
-            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Ver Detalle</th>
-            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+            <th th:text="#{text.cliente.factura.folio}">Id</th>
+            <th th:text="#{text.cliente.factura.descripcion}">Descripción</th>
+            <th th:text="#{text.cliente.factura.fecha}">Fecha</th>
+            <th class="text-center" th:text="#{text.cliente.factura.total}">Total</th>
+            <th class="text-center" th:text="#{text.cliente.factura.detalle}" sec:authorize="hasRole('ROLE_ADMIN')">Ver Detalle</th>
+            <th class="text-center" th:text="#{text.cliente.factura.eliminar}" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
           </tr>
           </thead>
           <tbody>
@@ -47,13 +50,13 @@
             <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
               <a class="btn btn-primary btn-xs" th:href="@{'/factura/ver/' + ${factura.id}}">
                 <i class="fas fa-eye"></i>
-                <span class="sr-only">Ver detalle factura</span>
+                <span class="sr-only" th:text="#{text.cliente.factura.detalle}">Ver detalle factura</span>
               </a>
             </td>
             <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
-              <a class="btn btn-danger btn-xs eliminar" th:href="@{'/factura/eliminar/' + ${factura.id}}">
+              <a class="btn btn-danger btn-xs eliminar_factura" th:href="@{'/factura/eliminar/' + ${factura.id}}">
                 <i class="far fa-trash-alt"></i>
-                <span class="sr-only">Eliminar</span>
+                <span class="sr-only" th:text="#{text.cliente.factura.eliminar}">Eliminar</span>
               </a>
             </td>
           </tr>

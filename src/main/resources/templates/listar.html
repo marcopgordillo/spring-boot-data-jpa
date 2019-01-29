@@ -3,13 +3,14 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
+  <div id="i18n_eliminar_cliente" th:text="#{text.cliente.eliminarOk}" class="d-none"></div>
   <header th:replace="layout/layout :: header"></header>
   <div class="container py-4">
     <div class="card bg-light">
       <h1 class="card-header text-secondary" th:text="${titulo}"></h1>
       <div class="card-body">
         <h4 class="card-title">
-          <a class="btn btn-primary btn-xs" th:href="@{/form}" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fas fa-user"></i> Crear Cliente</a>
+          <a class="btn btn-primary btn-xs" th:href="@{/form}" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fas fa-user"></i> <span th:text="#{text.cliente.crear}">Crear Cliente</span></a>
         </h4>
 
         <table class="table table-striped">
@@ -20,9 +21,9 @@
             <th th:text="#{text.cliente.apellido}">Apellido</th>
             <th th:text="#{text.cliente.email}">Email</th>
             <th class="text-center" th:text="#{text.cliente.dob}">Fecha de Nacimiento</th>
-            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Crear Factura</th>
-            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
-            <th class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+            <th class="text-center" th:text="#{text.cliente.factura.crear}" sec:authorize="hasRole('ROLE_ADMIN')">Crear Factura</th>
+            <th class="text-center" th:text="#{text.cliente.editar}" sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+            <th class="text-center" th:text="#{text.cliente.eliminar}" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
           </tr>
           </thead>
           <tbody>
@@ -35,19 +36,19 @@
             <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
               <a class="btn btn-success btn-xs" th:href="@{'/factura/form/' + ${cliente.id}}">
                 <i class="fas fa-plus-circle"></i>
-                <span class="sr-only">Crear Factura</span>
+                <span class="sr-only" th:text="#{text.cliente.factura.crear}">Crear Factura</span>
               </a>
             </td>
             <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
               <a class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}">
                 <i class="far fa-edit"></i>
-                <span class="sr-only">Editar</span>
+                <span class="sr-only" th:text="#{text.cliente.editar}">Editar</span>
               </a>
             </td>
             <td class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
-              <a class="btn btn-danger btn-xs eliminar" th:href="@{/eliminar/} + ${cliente.id}">
+              <a class="btn btn-danger btn-xs eliminar_cliente" th:href="@{'/eliminar/' + ${cliente.id}}">
                 <i class="far fa-trash-alt"></i>
-                <span class="sr-only">Eliminar</span>
+                <span class="sr-only" th:text="#{text.cliente.eliminar}">Eliminar</span>
               </a>
             </td>
           </tr>

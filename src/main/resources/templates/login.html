@@ -6,25 +6,25 @@
 
 <div class="container py-4">
   <div class="card bg-light border-primary">
-    <h1 class="card-header text-secondary text-center" th:text="${titulo}"></h1>
+    <h1 class="card-header text-secondary text-center" th:text="#{text.login.titulo}">Por favor Sign In!</h1>
     <div class="card-body">
 
       <form th:action="@{/login}" method="post">
         <div class="form-group row">
-          <label for="username" class="col-sm-2 col-form-label text-right">Usuario:</label>
+          <label for="username" class="col-sm-2 col-form-label text-right" th:text="#{text.login.username}">Usuario:</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" id="username" name="username" required="" autofocus=""/>
           </div>
         </div>
         <div class="form-group row">
-          <label for="password" class="col-sm-2 col-form-label text-right">Contraseña:</label>
+          <label for="password" class="col-sm-2 col-form-label text-right" th:text="#{text.login.password}">Contraseña:</label>
           <div class="col-sm-10">
             <input type="password" class="form-control" id="password" name="password" required="" />
           </div>
         </div>
         <div class="form-group row">
           <div class="offset-md-2 col-sm-10">
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Ingresar" />
+            <input type="submit" class="btn btn-primary btn-lg btn-block" th:value="#{text.login.boton}" />
           </div>
         </div>
         <!-- Opcional Spring security anade esto automaticamente -->
