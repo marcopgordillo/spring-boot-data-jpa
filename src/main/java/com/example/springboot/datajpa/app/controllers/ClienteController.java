@@ -4,6 +4,7 @@ import com.example.springboot.datajpa.app.models.entity.Cliente;
 import com.example.springboot.datajpa.app.models.service.IClienteService;
 import com.example.springboot.datajpa.app.models.service.IUploadFileService;
 import com.example.springboot.datajpa.app.util.paginator.PageRender;
+import com.example.springboot.datajpa.app.view.xml.ClienteList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +57,16 @@ public class ClienteController {
     this.clienteService = clienteService;
     this.uploadFileService = uploadFileService;
     this.messageSource = messageSource;
+  }
+
+ /* @GetMapping("/listar-rest")
+  public @ResponseBody List<Cliente> listarRest() {
+    return clienteService.findAll();
+  }*/
+
+  @GetMapping("/listar-rest")
+  public @ResponseBody ClienteList listarRest() {
+    return new ClienteList(clienteService.findAll());
   }
 
   @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
