@@ -91,7 +91,7 @@ public class ClienteController {
       logger.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
     }
 
-    if(format != null && (format.equals("csv") || format.equals("xml"))) {
+    if(format != null && (format.equals("csv") || format.equals("xml") || format.equals("json"))) {
       List<Cliente> clientes = clienteService.findAll();
       model.addAttribute("clientes", clientes);
     } else {

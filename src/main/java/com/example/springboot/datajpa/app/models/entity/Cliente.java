@@ -1,5 +1,6 @@
 package com.example.springboot.datajpa.app.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,6 +49,7 @@ public class Cliente implements Serializable {
   private String foto;
 
   @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<Factura> facturas;
 
   public Cliente() {
