@@ -1,5 +1,7 @@
 package com.example.springboot.datajpa.app.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,6 +19,7 @@ public class ItemFactura implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   // @JoinColumn(name = "producto_id") // No es necesario ya que se esta creando el producto_id en la misma table factura_items
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   private Producto producto;
 
   public Double calcularImporte() {
