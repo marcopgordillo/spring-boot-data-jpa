@@ -91,7 +91,7 @@ public class ClienteController {
       logger.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
     }
 
-    if(format != null && format.equals("csv")) {
+    if(format != null && (format.equals("csv") || format.equals("xml"))) {
       List<Cliente> clientes = clienteService.findAll();
       model.addAttribute("clientes", clientes);
     } else {
@@ -102,10 +102,8 @@ public class ClienteController {
       PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
       model.addAttribute("page", pageRender);
       model.addAttribute("clientes", clientes);
+      model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
     }
-
-    model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
-
 
     return "listar";
   }
