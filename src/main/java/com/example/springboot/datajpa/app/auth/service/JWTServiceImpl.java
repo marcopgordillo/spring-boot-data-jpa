@@ -7,12 +7,13 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-@Service
+@Component
 public class JWTServiceImpl implements JWTService {
 
   public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Secreta.123456".getBytes());
@@ -42,9 +43,12 @@ public class JWTServiceImpl implements JWTService {
 
   public static final String CONTENT_TYPE = "application/json";
 
+  private static final String  KEYS_FILE = "server.jks";
+
   private Logger logger = LoggerFactory.getLogger(getClass());
 
-  private ClassPathResource resource = new ClassPathResource("certs/server.jks");
+  @Value("${application.controller.certs}")
+  private String certs;
 
   @Override
   public String create(Authentication auth) throws IOException {
@@ -109,7 +113,7 @@ public class JWTServiceImpl implements JWTService {
 
     try {
       KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keystore.load(resource.getInputStream(), STORAGE_SECRET.toCharArray());
+      keystore.load(getResource().getInputStream(), STORAGE_SECRET.toCharArray());
       Certificate cert = keystore.getCertificate(KEY_NAME);
 
       publicKey = cert.getPublicKey();
@@ -126,9 +130,8 @@ public class JWTServiceImpl implements JWTService {
     Key key = null;
 
     try {
-
       KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keystore.load(resource.getInputStream(), STORAGE_SECRET.toCharArray());
+      keystore.load(getResource().getInputStream(), STORAGE_SECRET.toCharArray());
 
       key = keystore.getKey(KEY_NAME, STORAGE_SECRET.toCharArray());
 
@@ -137,5 +140,10 @@ public class JWTServiceImpl implements JWTService {
     }
 
     return key;
+  }
+
+  private ClassPathResource getResource() {
+
+    return new ClassPathResource(certs + "/" + KEYS_FILE);
   }
 }
