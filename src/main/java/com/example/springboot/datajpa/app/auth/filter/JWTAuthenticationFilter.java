@@ -1,5 +1,8 @@
 package com.example.springboot.datajpa.app.auth.filter;
 
+import com.example.springboot.datajpa.app.models.entity.Usuario;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -39,25 +42,34 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String username = this.obtainUsername(request);
         String password = this.obtainPassword(request);
-        if (username == null) {
-            username = "";
-        }
 
-        if (password == null) {
-            password = "";
-        }
-
-        if (username != null && password !=null) {
+        if (username != null && password != null) {
             logger.info("Username desde request parameter (form-data): " + username);
             logger.info("Password desde request parameter (form-data): " + password);
+        } else {
+            Usuario user = null;
+            try {
+                user = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
+
+                username = user.getUsername();
+                password = user.getPassword();
+
+                logger.info("Username desde request parameter (raw): " + username);
+                logger.info("Password desde request parameter (raw): " + password);
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        username = username.trim();
+            username = username.trim();
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
 
-
-        return authenticationManager.authenticate(authToken);
+            return authenticationManager.authenticate(authToken);
     }
 
     @Override
@@ -72,10 +84,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
+
+        //String keyString = Base64.getUrlDecoder().decode(key.getEncoded()).toString();
+
+        logger.info("Key: " + key.getEncoded());
+
         String token = Jwts.builder()
                 .setClaims(claims)
-//                .setSubject(username)
-                .signWith(SignatureAlgorithm.HS512, "Alguna.Clave.Secreta.123456".getBytes())
+                .setSubject(username)
+//                .signWith(SignatureAlgorithm.HS512, "Alguna.Clave.Secreta.123456".getBytes())
                 .signWith(key)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 14400000L))
