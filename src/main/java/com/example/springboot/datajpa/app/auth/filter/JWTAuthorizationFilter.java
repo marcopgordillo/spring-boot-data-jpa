@@ -70,7 +70,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
       e.printStackTrace();
     }
 
-
+//comentario
     UsernamePasswordAuthenticationToken authentication = null;
 
     if (validToken) {
