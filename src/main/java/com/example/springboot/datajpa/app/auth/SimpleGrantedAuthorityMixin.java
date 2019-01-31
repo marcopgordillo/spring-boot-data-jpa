@@ -3,9 +3,9 @@ package com.example.springboot.datajpa.app.auth;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public abstract class SimpleGrantedAuthoriesMixin {
+public abstract class SimpleGrantedAuthorityMixin {
 
   @JsonCreator
-  public SimpleGrantedAuthoriesMixin(@JsonProperty("authority") String role) {
+  public SimpleGrantedAuthorityMixin(@JsonProperty("authority") String role) {
   }
 }
