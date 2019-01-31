@@ -101,12 +101,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (UnrecoverableKeyException e) {
             e.printStackTrace();
         }
-//        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
-
-        //String keyString = Base64.getUrlDecoder().decode(key.getEncoded()).toString();
-
-//        logger.info("Key: " + key.getEncoded());
 
         String token = Jwts.builder()
                 .setClaims(claims)
@@ -126,6 +120,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(200);
+        response.setContentType("application/json");
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("mensaje", "Error de autenticacion: username o password incorectos!");
+        body.put("error", failed.getMessage());
+
+        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        response.setStatus(401);
         response.setContentType("application/json");
     }
 }
