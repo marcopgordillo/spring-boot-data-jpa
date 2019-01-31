@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.*;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.Collection;
 import java.util.Date;
@@ -90,8 +89,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
             keystore.load(resource.getInputStream(), "jkspassword".toCharArray());
             key = keystore.getKey("jwtkey", "jkspassword".toCharArray());
-            Certificate cert = keystore.getCertificate("jwtkey");
-            PublicKey publicKey = cert.getPublicKey();
+//            Certificate cert = keystore.getCertificate("jwtkey");
+//            PublicKey publicKey = cert.getPublicKey();
         } catch (KeyStoreException e) {
             e.printStackTrace();
         } catch (CertificateException e) {

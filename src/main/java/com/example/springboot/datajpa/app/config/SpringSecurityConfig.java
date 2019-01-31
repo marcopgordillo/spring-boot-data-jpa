@@ -1,6 +1,7 @@
 package com.example.springboot.datajpa.app.config;
 
 import com.example.springboot.datajpa.app.auth.filter.JWTAuthenticationFilter;
+import com.example.springboot.datajpa.app.auth.filter.JWTAuthorizationFilter;
 import com.example.springboot.datajpa.app.auth.handler.LoginSuccessHandler;
 import com.example.springboot.datajpa.app.models.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling().accessDeniedPage("/error_403")*/
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+            .addFilter(new JWTAuthorizationFilter(authenticationManager()))
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
