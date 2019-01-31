@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +21,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Key;
+import java.security.*;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -82,12 +83,30 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Claims claims = Jwts.claims();
         claims.put("authorities", new ObjectMapper().writeValueAsString(roles));
 
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        ClassPathResource resource = new ClassPathResource("server.jks");
+        Key key = null;
+
+        try {
+            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keystore.load(resource.getInputStream(), "jkspassword".toCharArray());
+            key = keystore.getKey("jwtkey", "jkspassword".toCharArray());
+            Certificate cert = keystore.getCertificate("jwtkey");
+            PublicKey publicKey = cert.getPublicKey();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+//        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
 
         //String keyString = Base64.getUrlDecoder().decode(key.getEncoded()).toString();
 
-        logger.info("Key: " + key.getEncoded());
+//        logger.info("Key: " + key.getEncoded());
 
         String token = Jwts.builder()
                 .setClaims(claims)
