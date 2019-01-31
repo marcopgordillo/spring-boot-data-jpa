@@ -1,5 +1,6 @@
 package com.example.springboot.datajpa.app.auth.filter;
 
+import com.example.springboot.datajpa.app.auth.SimpleGrantedAuthoriesMixin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -70,14 +71,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
       e.printStackTrace();
     }
 
-//comentario
     UsernamePasswordAuthenticationToken authentication = null;
 
     if (validToken) {
       String username = token.getSubject();
       Object roles = token.get("authorities");
 
-      Collection<? extends GrantedAuthority> authorities = Arrays.asList(new ObjectMapper().readValue(roles.toString().getBytes(), SimpleGrantedAuthority[].class));
+      Collection<? extends GrantedAuthority> authorities = Arrays.asList(new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthoriesMixin.class).readValue(roles.toString().getBytes(), SimpleGrantedAuthority[].class));
 
       authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
