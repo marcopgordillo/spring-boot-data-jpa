@@ -5,12 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import java.io.IOException;
 import java.security.*;
@@ -20,10 +23,28 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-@Component
+@Service
 public class JWTServiceImpl implements JWTService {
 
-  private ClassPathResource resource = new ClassPathResource("server.jks");
+  public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Secreta.123456".getBytes());
+
+  public static final String STORAGE_SECRET = "jkspassword";
+
+  public static final String KEY_NAME = "jwtkey";
+
+  public static final String KEY_SECRET = "keypassword";
+
+  public static final long EXPIRATION_DATE = 14400000L;
+
+  public static final String TOKEN_PREFIX = "Bearer ";
+
+  public static final String HEADER_STRING = "Authorization";
+
+  public static final String CONTENT_TYPE = "application/json";
+
+  private Logger logger = LoggerFactory.getLogger(getClass());
+
+  private ClassPathResource resource = new ClassPathResource("certs/server.jks");
 
   @Override
   public String create(Authentication auth) throws IOException {
@@ -38,14 +59,12 @@ public class JWTServiceImpl implements JWTService {
     return Jwts.builder()
             .setClaims(claims)
             .setSubject(username)
-//                .signWith(SignatureAlgorithm.HS512, "Alguna.Clave.Secreta.123456".getBytes())
+//                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
             .signWith(getPrivateKey())
             .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + 14400000L))
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DATE))
             .compact();
   }
-
-
 
   @Override
   public boolean validate(String token) {
@@ -81,7 +100,7 @@ public class JWTServiceImpl implements JWTService {
 
   @Override
   public String resolve(String token) {
-    return token != null && token.startsWith("Bearer ") ? token.replace("Bearer ", "") : null;
+    return token != null && token.startsWith(TOKEN_PREFIX) ? token.replace(TOKEN_PREFIX, "") : null;
   }
 
   private PublicKey getPublicKey() {
@@ -90,8 +109,8 @@ public class JWTServiceImpl implements JWTService {
 
     try {
       KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keystore.load(resource.getInputStream(), "jkspassword".toCharArray());
-      Certificate cert = keystore.getCertificate("jwtkey");
+      keystore.load(resource.getInputStream(), STORAGE_SECRET.toCharArray());
+      Certificate cert = keystore.getCertificate(KEY_NAME);
 
       publicKey = cert.getPublicKey();
 
@@ -107,10 +126,11 @@ public class JWTServiceImpl implements JWTService {
     Key key = null;
 
     try {
-      KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keystore.load(resource.getInputStream(), "jkspassword".toCharArray());
 
-      key = keystore.getKey("jwtkey", "jkspassword".toCharArray());
+      KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+      keystore.load(resource.getInputStream(), STORAGE_SECRET.toCharArray());
+
+      key = keystore.getKey(KEY_NAME, STORAGE_SECRET.toCharArray());
 
     } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | UnrecoverableKeyException | IOException e) {
       e.printStackTrace();

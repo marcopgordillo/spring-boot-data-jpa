@@ -21,13 +21,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
   private final LoginSuccessHandler loginSuccessHandler;
   private final BCryptPasswordEncoder passwordEncoder;
   private final JpaUserDetailsService userDetailsService;
-  private final JWTService jwtService;
 
-  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, BCryptPasswordEncoder passwordEncoder, JpaUserDetailsService userDetailsService, JWTService jwtService) {
+  @Autowired
+  private JWTService jwtService;
+
+  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, BCryptPasswordEncoder passwordEncoder, JpaUserDetailsService userDetailsService) {
     this.loginSuccessHandler = loginSuccessHandler;
     this.passwordEncoder = passwordEncoder;
     this.userDetailsService = userDetailsService;
-    this.jwtService = jwtService;
   }
 
   @Override

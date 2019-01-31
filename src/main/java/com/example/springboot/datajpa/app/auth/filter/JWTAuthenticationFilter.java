@@ -1,8 +1,10 @@
 package com.example.springboot.datajpa.app.auth.filter;
 
 import com.example.springboot.datajpa.app.auth.service.JWTService;
+import com.example.springboot.datajpa.app.auth.service.JWTServiceImpl;
 import com.example.springboot.datajpa.app.models.entity.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,7 +69,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = jwtService.create(authResult);
 
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(JWTServiceImpl.HEADER_STRING, JWTServiceImpl.TOKEN_PREFIX + token);
 
         Map<String, Object> body = new HashMap<>();
         body.put("token", token);
@@ -75,8 +77,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         body.put("mensaje", String.format("Hola %s, has iniciado sesión con éxito", authResult.getName()));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-        response.setStatus(200);
-        response.setContentType("application/json");
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(JWTServiceImpl.CONTENT_TYPE);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         body.put("error", failed.getMessage());
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-        response.setStatus(401);
-        response.setContentType("application/json");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType(JWTServiceImpl.CONTENT_TYPE);
     }
 }

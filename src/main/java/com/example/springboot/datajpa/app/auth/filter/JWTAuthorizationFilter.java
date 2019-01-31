@@ -1,6 +1,7 @@
 package com.example.springboot.datajpa.app.auth.filter;
 
 import com.example.springboot.datajpa.app.auth.service.JWTService;
+import com.example.springboot.datajpa.app.auth.service.JWTServiceImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +25,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-    String header = request.getHeader("Authorization"); // Este es el token
+    String header = request.getHeader(JWTServiceImpl.HEADER_STRING); // Este es el token
 
     if (!requiresAuthentication(header)) {
       chain.doFilter(request, response);
@@ -44,6 +45,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
   }
 
   private boolean requiresAuthentication(String header) {
-    return header != null && header.startsWith("Bearer ");
+    return header != null && header.startsWith(JWTServiceImpl.TOKEN_PREFIX);
   }
 }
