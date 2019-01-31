@@ -1,0 +1,6 @@
+keytool -genkeypair -keysize 4096 -keyalg RSA -alias jwtkey -storetype jceks -keystore server.jks -storepass jkspassword -keypass keypassword
+keytool -importkeystore -srckeystore server.jks -destkeystore server.jks -deststoretype pkcs12
+keytool -export -keystore server.jks -alias jwtkey -file jwtkey.cer
+openssl x509 -inform der -in jwtkey.cer -pubkey
+openssl pkcs12 -in server.jks -nokeys -out cert.pem
+openssl pkcs12 -in server.jks -nodes -nocerts -out key.pem
