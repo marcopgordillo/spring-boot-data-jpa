@@ -3,6 +3,7 @@ package com.example.springboot.datajpa.app.config;
 import com.example.springboot.datajpa.app.auth.filter.JWTAuthenticationFilter;
 import com.example.springboot.datajpa.app.auth.filter.JWTAuthorizationFilter;
 import com.example.springboot.datajpa.app.auth.handler.LoginSuccessHandler;
+import com.example.springboot.datajpa.app.auth.service.JWTService;
 import com.example.springboot.datajpa.app.models.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +21,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
   private final LoginSuccessHandler loginSuccessHandler;
   private final BCryptPasswordEncoder passwordEncoder;
   private final JpaUserDetailsService userDetailsService;
+  private final JWTService jwtService;
 
-  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, BCryptPasswordEncoder passwordEncoder, JpaUserDetailsService userDetailsService) {
+  public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, BCryptPasswordEncoder passwordEncoder, JpaUserDetailsService userDetailsService, JWTService jwtService) {
     this.loginSuccessHandler = loginSuccessHandler;
     this.passwordEncoder = passwordEncoder;
     this.userDetailsService = userDetailsService;
+    this.jwtService = jwtService;
   }
 
   @Override
@@ -43,8 +46,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .exceptionHandling().accessDeniedPage("/error_403")*/
             .and()
-            .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-            .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+            .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtService))
+            .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtService))
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
