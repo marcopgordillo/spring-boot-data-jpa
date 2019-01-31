@@ -24,3 +24,8 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/src/main/resources/cert.pem
+/src/main/resources/jwtkey.cer
+/src/main/resources/key.pem
+/src/main/resources/server.jks
+/src/main/resources/server.jks.old
