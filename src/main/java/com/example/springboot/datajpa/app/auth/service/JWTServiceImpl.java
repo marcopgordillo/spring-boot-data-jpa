@@ -43,7 +43,7 @@ public class JWTServiceImpl implements JWTService {
 
   public static final String CONTENT_TYPE = "application/json";
 
-  private static final String  KEYS_FILE = "server.jks";
+  private static final String  KEYS_FILE = "certs/server.jks";
 
   private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -144,6 +144,6 @@ public class JWTServiceImpl implements JWTService {
 
   private ClassPathResource getResource() {
 
-    return new ClassPathResource(certs + "/" + KEYS_FILE);
+    return new ClassPathResource(KEYS_FILE);
   }
 }
