@@ -13,6 +13,7 @@ public class ItemFactura implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(columnDefinition = "serial")
   private Long id;
 
   private Integer cantidad;
