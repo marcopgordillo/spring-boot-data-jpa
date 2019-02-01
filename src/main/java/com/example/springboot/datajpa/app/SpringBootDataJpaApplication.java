@@ -4,9 +4,11 @@ import com.example.springboot.datajpa.app.models.service.IUploadFileService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
+@EnableCaching
 public class SpringBootDataJpaApplication implements CommandLineRunner {
 
   private final IUploadFileService uploadFileService;
