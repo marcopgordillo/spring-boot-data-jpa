@@ -1,5 +1,5 @@
 /* Populate tables */
-INSERT INTO clientes (id, nombre, apellido, email, create_at, dob) values ('Andrés', 'Guzman', 'profesor@bolsadeideas.com', DATE(NOW()), '1982-02-15');
+INSERT INTO clientes (nombre, apellido, email, create_at, dob) values ('Andrés', 'Guzman', 'profesor@bolsadeideas.com', DATE(NOW()), '1982-02-15');
 INSERT INTO clientes (nombre, apellido, email, create_at, dob) values ('John', 'Doe', 'john.doe2@gmail.com', DATE(NOW()), '1982-02-15');
 INSERT INTO clientes (nombre, apellido, email, create_at, dob) values ('John', 'Doe', 'john.doe3@gmail.com', DATE(NOW()), '1982-02-15');
 INSERT INTO clientes (nombre, apellido, email, create_at, dob) values ('John', 'Doe', 'john.doe4@gmail.com', DATE(NOW()), '1982-02-15');
