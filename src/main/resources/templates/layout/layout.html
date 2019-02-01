@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:fragment="head">
+  <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
-    <link rel="stylesheet" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/webjars/font-awesome/5.6.3/css/all.min.css" />
-    <link rel="stylesheet" href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" th:href="@{'/webjars/bootstrap/4.2.1/css/bootstrap.min.css'}" />
+    <link rel="stylesheet" th:href="@{'/webjars/font-awesome/5.6.3/css/all.min.css'}" />
+    <link rel="stylesheet" th:href="@{'/webjars/jquery-ui/1.12.1/jquery-ui.min.css'}" />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
   </head>
   <body>
@@ -78,11 +78,11 @@
         Guzman. <br /> &copy; Company 2019, Inc. Todos los derechos reservados. Terminos de Uso y privacidad.
       </p>
 
-      <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-      <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
-      <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-      <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-      <!-- <script src="webjars/font-awesome/5.6.3/js/all.min.js"></script> -->
+      <script th:src="@{'/webjars/jquery/3.3.1-1/jquery.min.js'}"></script>
+      <script th:src="@{'/webjars/popper.js/1.14.3/umd/popper.min.js'}"></script>
+      <script th:src="@{'/webjars/bootstrap/4.2.1/js/bootstrap.min.js'}"></script>
+      <script th:src="@{'/webjars/jquery-ui/1.12.1/jquery-ui.min.js'}"></script>
+      <!-- <script th:src="@{'/webjars/font-awesome/5.6.3/js/all.min.js'}"></script> -->
       <script th:src="@{/js/script.js}"></script>
     </footer>
   </body>

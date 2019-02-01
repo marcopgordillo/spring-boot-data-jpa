@@ -1,8 +1,11 @@
 $(document).ready(function () {
+
+    var urlAjax = $('#urlAjax').val();
+
     $('#buscar_producto').autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: '/factura/cargar-productos/' + request.term,
+                url: urlAjax + request.term,
                 dataType: 'json',
                 data: {
                     term: request.term
