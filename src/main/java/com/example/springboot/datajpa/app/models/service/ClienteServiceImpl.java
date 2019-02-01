@@ -6,9 +6,6 @@ import com.example.springboot.datajpa.app.models.dao.IProductoDao;
 import com.example.springboot.datajpa.app.models.entity.Cliente;
 import com.example.springboot.datajpa.app.models.entity.Factura;
 import com.example.springboot.datajpa.app.models.entity.Producto;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,13 +40,13 @@ public class ClienteServiceImpl implements IClienteService {
 
 	@Override
 	@Transactional
-	@CachePut("clientes")
+//	@CachePut("clientes")
 	public void save(Cliente cliente) {
 		clienteDao.save(cliente);
 	}
 
 	@Override
-	@Cacheable(value = "clientes", key = "#id")
+//	@Cacheable("clientes")
 	@Transactional(readOnly = true)
 	public Cliente findOne(Long id) {
 		return clienteDao.findById(id).orElse(null);
@@ -69,7 +66,7 @@ public class ClienteServiceImpl implements IClienteService {
 
 	@Override
 	@Transactional
-	@CacheEvict("clientes")
+//	@CacheEvict("clientes")
 	public void delete(Long id) {
 		clienteDao.deleteById(id);
 	}
